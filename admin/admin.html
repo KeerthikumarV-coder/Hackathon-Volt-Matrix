@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SafeSpeak Admin Dashboard</title>
+
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            🛡️ Safe<span>Speak</span>
+        </div>
+
+        <p class="admin-label">ADMIN PORTAL</p>
+
+        <nav>
+
+            <a href="#" class="active">
+                📊 Dashboard
+            </a>
+
+            <a href="#reports">
+                📋 Reports
+            </a>
+
+            <a href="#pending">
+                ⏳ Pending Reports
+            </a>
+
+            <a href="#resolved">
+                ✅ Resolved Reports
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="#">
+                ⚙️ Settings
+            </a>
+
+            <button onclick="logout()" class="logout">
+                🚪 Logout
+            </button>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Manage and monitor anonymous harassment reports.</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="avatar">A</div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <small>SafeSpeak Admin</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+        <section class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon blue">📋</div>
+
+                <div>
+                    <p>Total Reports</p>
+                    <h2 id="totalReports">24</h2>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon orange">⏳</div>
+
+                <div>
+                    <p>Pending</p>
+                    <h2 id="pendingReports">8</h2>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon purple">🔍</div>
+
+                <div>
+                    <p>Under Review</p>
+                    <h2 id="reviewReports">6</h2>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon green">✓</div>
+
+                <div>
+                    <p>Resolved</p>
+                    <h2 id="resolvedReports">10</h2>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- REPORT MANAGEMENT -->
+        <section class="reports-section" id="reports">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Reports</h2>
+                    <p>Review reports submitted by users.</p>
+                </div>
+
+                <button class="export-btn" onclick="exportReports()">
+                    ↓ Export
+                </button>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search Report ID..."
+                    onkeyup="filterReports()"
+                >
+
+
+                <select id="statusFilter" onchange="filterReports()">
+
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="Under Review">
+                        Under Review
+                    </option>
+
+                    <option value="Resolved">
+                        Resolved
+                    </option>
+
+                </select>
+
+
+                <select id="priorityFilter" onchange="filterReports()">
+
+                    <option value="all">
+                        All Priority
+                    </option>
+
+                    <option value="High">
+                        High
+                    </option>
+
+                    <option value="Medium">
+                        Medium
+                    </option>
+
+                    <option value="Low">
+                        Low
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- REPORT TABLE -->
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Report ID</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="reportTable">
+
+                        <tr>
+
+                            <td>
+                                <strong>SS-2026-KJW3Q4</strong>
+                            </td>
+
+                            <td>Online Harassment</td>
+
+                            <td>23 Sep 2026</td>
+
+                            <td>
+                                <span class="priority high">
+                                    High
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="status review">
+                                    Under Review
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    class="view-btn"
+                                    onclick="viewReport('SS-2026-KJW3Q4')">
+                                    View
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>SS-2026-MN72P1</strong>
+                            </td>
+
+                            <td>Verbal Harassment</td>
+
+                            <td>23 Sep 2026</td>
+
+                            <td>
+                                <span class="priority medium">
+                                    Medium
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="status pending">
+                                    Pending
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    class="view-btn"
+                                    onclick="viewReport('SS-2026-MN72P1')">
+                                    View
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>SS-2026-RT84L2</strong>
+                            </td>
+
+                            <td>Cyber Harassment</td>
+
+                            <td>22 Sep 2026</td>
+
+                            <td>
+                                <span class="priority high">
+                                    High
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="status review">
+                                    Under Review
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    class="view-btn"
+                                    onclick="viewReport('SS-2026-RT84L2')">
+                                    View
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>SS-2026-AB91X7</strong>
+                            </td>
+
+                            <td>Physical Harassment</td>
+
+                            <td>21 Sep 2026</td>
+
+                            <td>
+                                <span class="priority high">
+                                    High
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="status resolved">
+                                    Resolved
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    class="view-btn"
+                                    onclick="viewReport('SS-2026-AB91X7')">
+                                    View
+                                </button>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- REPORT DETAILS POPUP -->
+
+    <div id="reportModal" class="modal">
+
+        <div class="modal-content">
+
+            <button class="close" onclick="closeModal()">
+                ×
+            </button>
+
+            <h2>Report Details</h2>
+
+            <p class="modal-id" id="modalReportId">
+                SS-2026-KJW3Q4
+            </p>
+
+
+            <div class="details">
+
+                <div>
+                    <label>Category</label>
+                    <p id="modalCategory">Online Harassment</p>
+                </div>
+
+                <div>
+                    <label>Priority</label>
+
+                    <select id="modalPriority">
+
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+
+                    </select>
+
+                </div>
+
+                <div>
+                    <label>Status</label>
+
+                    <select id="modalStatus">
+
+                        <option>Pending</option>
+                        <option>Under Review</option>
+                        <option>Resolved</option>
+
+                    </select>
+
+                </div>
+
+                <div>
+                    <label>Date Submitted</label>
+                    <p>23 September 2026</p>
+                </div>
+
+            </div>
+
+
+            <div class="description">
+
+                <label>Incident Description</label>
+
+                <p>
+                    The reporter has submitted an anonymous complaint
+                    regarding harassment. The report has been received
+                    securely and requires administrative review.
+                </p>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    class="save-btn"
+                    onclick="saveReport()">
+                    Save Changes
+                </button>
+
+                <button
+                    class="cancel-btn"
+                    onclick="closeModal()">
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="admin.js"></script>
+
+</body>
+</html>
